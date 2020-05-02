@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DEG2RAD 3.14159/180.0
+ 
 void controls1(void);
 void startmenu(void);
 void aboutf(void);
@@ -77,6 +79,40 @@ void initfun(){
     glLoadIdentity();
     gluOrtho2D(0,1280,0,1024);
     mypos();
+}
+
+void DrawCircle(float x, float y)
+{
+    int i;
+    int lineAmount = 100; //# of triangles used to draw circle
+
+    GLfloat radius = 50; //radius
+    GLfloat twicePi = 2 * 3.141592;
+    glBegin(GL_TRIANGLE_FAN);
+        for(i = 0; i <= lineAmount;i++) {
+            glVertex2f(
+                x + (radius * cos(i *  twicePi / lineAmount)),
+                y + (radius* sin(i * twicePi / lineAmount))
+            );
+        }
+    glEnd();
+}
+
+void DrawMole(float x, float y)
+{
+    int i;
+    int lineAmount = 100; //# of triangles used to draw circle
+
+    GLfloat radius = 30; //radius
+    GLfloat twicePi = 2 * 3.141592;
+    glBegin(GL_TRIANGLE_FAN);
+        for(i = 0; i <= lineAmount;i++) {
+            glVertex2f(
+                x + (radius * cos(i *  twicePi / lineAmount)),
+                y + (radius* sin(i * twicePi / lineAmount))
+            );
+        }
+    glEnd();
 }
 
 void moveRight(){
@@ -170,10 +206,25 @@ void display(void){
         glRectf(50,50,880,700);
         glColor3f(0,100.0/256.0,0);
         glRectf(70,70,860,680);
-        //b1
-        //b2glColor3f(0,0,0);
-        //b3
-        glRectf(90,90,840,660);
+        glColor3f(100.0/256.0, 0.0, 0.0);
+        DrawCircle(150.0, 600.0 );
+        DrawCircle(300.0, 600.0 );
+        DrawCircle(450.0, 600.0 );
+        DrawCircle(600.0, 600.0 );
+        DrawCircle(750.0, 600.0 );
+        DrawCircle(150.0, 400.0 );
+        DrawCircle(300.0, 400.0 );
+        DrawCircle(450.0, 400.0 );
+        DrawCircle(600.0, 400.0 );
+        DrawCircle(750.0, 400.0 );
+        DrawCircle(150.0, 200.0 );
+        DrawCircle(300.0, 200.0 );
+        DrawCircle(450.0, 200.0 );
+        DrawCircle(600.0, 200.0 );
+        DrawCircle(750.0, 200.0 );
+        glColor3f(0.0, 0.0, 0.0);
+        DrawMole(150.0, 600.0);
+        //glRectf(90,90,840,660);
         vs2=score%10;
         vs1=score/10;
         glRasterPos2f(100,800);
@@ -458,6 +509,7 @@ void reshape(int ww,int wh){
     gluOrtho2D(0,ww,0,wh);
     mypos();
 }
+
 
 int main(int argc, char** argv){
     glutInit(&argc, argv);
