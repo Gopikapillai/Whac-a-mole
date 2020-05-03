@@ -22,9 +22,13 @@ void startmenu(void);
 void aboutf(void);
 void lev(void);
 void over(void);
+void DrawMole(float x, float y);
+void moveNext(void);
 
-int x,y,w,f=0,i,j,k,v,wwh=1024;
+int a=0,b=0,w,f=0,i,j,k,v,wwh=1024;
 int hitFlag=0, messageTrue=0, startFlag=0, backFlag=0, controlsFlag=0, aboutFlag=0, dirFlag=0, upFlag=0, overFlag=0, levFlag;
+int aw = 800;
+int ah = 20;
 
 char wel[100]="WELCOME TO 'WHACK-A-MOLE' GAME...";
 char start[50]="1: START GAME.";
@@ -63,23 +67,39 @@ int score=0,rem,vs1=0,vs2=0;
 int yy1=660,yy2=750;int level1=0,level2=0,level3=0;
 
 struct lag{
-    float x1,x2,y1,y2;
+    //float x1,x2,y1,y2;
+    float x,y;
     float color;
 }o;
 
 void mypos(){
-    o.x1=90;
-    o.y1=100;
-    o.x2=o.x1+40;
-    o.y2=o.y1+40;
+    o.x=150;
+    o.y=600;
+    //o.x2=o.x1+40;
+    //o.y2=o.y1+40;
+    DrawMole(o.x, o.y);
+    
+    glFlush();
 }
 
 void initfun(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0,1280,0,1024);
-    mypos();
+    //mypos();
 }
+
+void timer_func(int value){    // handle animation{
+     // update the postion
+    //if (value<150000){ // as in your originial loop
+        moveNext();
+        glutTimerFunc(10000, timer_func, f);
+        //value++;// plan next occurence
+    //}
+     glutPostRedisplay();
+    glFlush();    // redraw the window
+}
+
 
 void DrawCircle(float x, float y)
 {
@@ -115,7 +135,7 @@ void DrawMole(float x, float y)
     glEnd();
 }
 
-void moveRight(){
+void moveNext(){
     if(level1==0&&level2==0&&level3==0) v=5;
     if(level1==1)
         v=5;
@@ -123,28 +143,145 @@ void moveRight(){
         v=10;
     else if(level3==1)
         v=15;
-    o.x1=o.x1+v;
-    o.y1=o.y1;
-    o.x2=o.x1+40;
-    o.y2=o.y1+40;
+    //o.x=o.x+v;
+    //o.y=o.y;
+    //o.x2=o.x1+40;
+    //o.y2=o.y1+40;
+    if(f==1){
+        DrawMole(450, 200);
+    }
+    if(f==2){
+        DrawMole(150, 400);
+    }
+    else if(f==3){
+        DrawMole(300, 400);
+    }
+    else if(f==4){
+        DrawMole(450, 600);
+    }
+    else if(f==5){
+        DrawMole(600, 200);
+    }
+    else if(f==6){
+        DrawMole(4500, 400);
+    }
+    else if(f==7){
+        DrawMole(750, 600);
+    }
+    else if(f==8){
+        DrawMole(750, 600);
+    }
+    else if(f==9){
+        DrawMole(750, 600);
+    }
+    else if(f==10){
+        DrawMole(750, 600);
+    }
+    else if(f==11){
+        DrawMole(750, 600);
+    }
+    else if(f==12){
+        DrawMole(750, 600);
+    }
+    else if(f==13){
+        DrawMole(750, 600);
+    }
+    else if(f==14){
+        DrawMole(750, 600);
+    }
+    
     glutPostRedisplay();
 }
 
 void randomGenerate(){
     f++;
-    if(f<10){
-        int num=rand()%620;
-        if(num<90)
-            num=num+100;
-        o.x1=90;
-        o.y1=num;
-        o.x2=o.x1+40;
-        o.y2=o.y1+40;
+    if(f<15){
+        //moveNext();
+        timer_func(f);
         hitFlag=0;
-        glutPostRedisplay();
+        
+        //glutPostRedisplay();
     }
     else
         over();
+}
+
+void startGame(){
+    glColor3f(100.0/256.0, 0.0, 0.0);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0,1280,0,1024);
+    glColor3f(1.0,100.0/256.0, 0.0);
+    glRectf(0,0,1280,1024);
+    glColor3f(220.0/256,150.0/256.0,0);
+    glRectf(50,50,880,700);
+    glColor3f(0,100.0/256.0,0);
+    glRectf(70,70,860,680);
+    glColor3f(100.0/256.0, 0.0, 0.0);
+    DrawCircle(150.0, 600.0 ); //drawing potholes
+    DrawCircle(300.0, 600.0 );
+    DrawCircle(450.0, 600.0 );
+    DrawCircle(600.0, 600.0 );
+    DrawCircle(750.0, 600.0 );
+    DrawCircle(150.0, 400.0 );
+    DrawCircle(300.0, 400.0 );
+    DrawCircle(450.0, 400.0 );
+    DrawCircle(600.0, 400.0 );
+    DrawCircle(750.0, 400.0 );
+    DrawCircle(150.0, 200.0 );
+    DrawCircle(300.0, 200.0 );
+    DrawCircle(450.0, 200.0 );
+    DrawCircle(600.0, 200.0 );
+    DrawCircle(750.0, 200.0 );
+    //glRectf(90,90,840,660);
+    vs2=score%10;
+    vs1=score/10;
+    glRasterPos2f(100,800);
+    for(i=0;i<sizeof(sco);i++)
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,sco[i]);
+    glRasterPos2f(170,800);
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs1+48);
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs2+48);
+    if(hitFlag==0){
+        glColor3f(1.0,1.0,1.0);
+        if (f==0){
+            mypos();
+            timer_func(f);
+        }
+        randomGenerate();
+        //glFlush();
+    }
+    
+    glColor3f(0,0,1);
+    glPointSize(5);
+    glBegin(GL_POINTS);
+    glVertex2f(a,b);
+    glEnd();
+    if(hitFlag==1){
+        hitFlag=0;
+        glColor4f(1.0,1.0,1.0,1.0);
+        char b[20]={"hit..."},c[20]={"lost.."};
+        //glRasterPos2f(o.x1,o.y1);
+        if(messageTrue==1){
+            score+=10;
+            for(int i=0;i<7;i++)
+                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,b[i]);
+            /*while(score!=0){
+                rem=score%10;
+                glColor3f(0,0,0);
+                glRasterPos2f(100,800);
+                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,48+rem);
+                score=score/10;
+                }*/
+            glFlush();
+        }
+        for(int t=0;t<1000;t++)
+            for(int h=0;h<1000;h++)
+                for(int y=0;y<100;y++){
+                }
+        randomGenerate();
+    }
+    glFlush();
 }
 
 void display(void){
@@ -193,87 +330,10 @@ void display(void){
     {
         lev();
     }
-    if(startFlag==1)
-    //to start
-    {
-        glColor3f(100.0/256.0, 0.0, 0.0);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluOrtho2D(0,1280,0,1024);
-        glColor3f(1.0,100.0/256.0, 0.0);
-        glRectf(0,0,1280,1024);
-        glColor3f(220.0/256,150.0/256.0,0);
-        glRectf(50,50,880,700);
-        glColor3f(0,100.0/256.0,0);
-        glRectf(70,70,860,680);
-        glColor3f(100.0/256.0, 0.0, 0.0);
-        DrawCircle(150.0, 600.0 );
-        DrawCircle(300.0, 600.0 );
-        DrawCircle(450.0, 600.0 );
-        DrawCircle(600.0, 600.0 );
-        DrawCircle(750.0, 600.0 );
-        DrawCircle(150.0, 400.0 );
-        DrawCircle(300.0, 400.0 );
-        DrawCircle(450.0, 400.0 );
-        DrawCircle(600.0, 400.0 );
-        DrawCircle(750.0, 400.0 );
-        DrawCircle(150.0, 200.0 );
-        DrawCircle(300.0, 200.0 );
-        DrawCircle(450.0, 200.0 );
-        DrawCircle(600.0, 200.0 );
-        DrawCircle(750.0, 200.0 );
-        glColor3f(0.0, 0.0, 0.0);
-        DrawMole(150.0, 600.0);
-        //glRectf(90,90,840,660);
-        vs2=score%10;
-        vs1=score/10;
-        glRasterPos2f(100,800);
-        for(i=0;i<sizeof(sco);i++)
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,sco[i]);
-        glRasterPos2f(170,800);
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs1+48);
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs2+48);
-        if(hitFlag==0){
-            glColor3f(1.0,1.0,1.0);
-            //object;
-            glRectf(o.x1,o.y1,o.x2,o.y2);
-            glFlush();
-            if(o.x2<=840)
-                moveRight();
-            if(o.x2>840)
-                randomGenerate();
-            glFlush();
-        }
-        glColor3f(0,0,1);
-        glPointSize(5);
-        glBegin(GL_POINTS);
-        glVertex2f(x,y);
-        glEnd();
-        if(hitFlag==1){
-            hitFlag=0;
-            glColor4f(1.0,1.0,1.0,1.0);
-            char b[20]={"hit..."},c[20]={"lost.."};
-            glRasterPos2f(o.x1,o.y1);
-            if(messageTrue==1){
-                score+=10;
-                for(int i=0;i<7;i++)
-                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,b[i]);
-                /*while(score!=0){
-                 rem=score%10;
-                 glColor3f(0,0,0);
-                 glRasterPos2f(100,800);
-                 glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,48+rem);
-                 score=score/10;
-                 }*/
-                glFlush();
-            }
-            for(int t=0;t<1000;t++)
-                for(int h=0;h<1000;h++)
-                    for(int y=0;y<100;y++){
-                    }
-            randomGenerate();
-        }
+    if(startFlag==1){
+       startGame();
     }
+    //to start
     glFlush();
 }
 
@@ -493,9 +553,10 @@ void keyboard(unsigned char key,int mx,int my){
 }
 
 void mouse(int b,int s,int mx,int my){
-    x=mx;
-    y=wwh-my;
-    if(x>=o.x1 && x<o.x1+40 && y>=o.y1 && y<=o.y1+40 ){
+    a=mx-10;
+    b=1024-my-100;
+    //if(x>=o.x1 && x<o.x1+40 && y>=o.y1 && y<=o.y1+40 ){
+    if(a==o.x && b==o.y){
         hitFlag=1;
         messageTrue=1;
     }
@@ -523,5 +584,6 @@ int main(int argc, char** argv){
     glutMouseFunc(mouse);
     glutReshapeFunc(reshape);
     glutMainLoop();
+    //glutTimerFunc(10000000, timerfunc, 0);
     return 0;
 }
