@@ -37,8 +37,8 @@ char about[50]="4: ABOUT GAME.";
 char levels[50]="3: LEVELS.";
 
 char control1[500]="HI...\n TO START WITH GAME, AN OBJECT OR MOLE WILL POP-UP AT DIFFERENT PLACES ON THE BOARD.";
-char control2[200]="YOU HAVE TO 'WHACk' ie HIT THAT OBJECT BY CLICKING LEFT BUTTON OF THE MOUSE ON THAT OBJECT.";
-char control3[200]="THERE WILL BE TEN CHANCES AND EACH CHANCE CARRIES 10 POINTS.";
+char control2[200]="YOU HAVE TO 'WHACK' ie HIT THAT OBJECT BY CLICKING LEFT BUTTON OF THE MOUSE ON THAT OBJECT.";
+char control3[200]="THERE WILL BE FIFTEEN CHANCES AND EACH CHANCE CARRIES 5 POINTS.";
 char control4[200]="AND YOU CAN CHOOSE DIFFERENT LEVELS IN THE GAME.";
 char control5[200]="press '1' to START GAME or '4' to go to 'ABOUTGAME' or '0' to go back.";
 char control6[100]="********** ALL THE BEST **********";
@@ -201,25 +201,19 @@ void DrawMole(float x, float y)
 }
 
 void moveUp(){
+    if(level1==0&&level2==0&&level3==0) v=15;
+    if(level1==1)
+        v=15;
+    else if(level2==1)
+        v=30;
+    else if(level3==1)
+        v=45;
     a1=a1;
-    b1=b1+5;
+    b1=b1+v;
     a2=a1+40;
     b2=b1+40;
     glutPostRedisplay();
 }
-
-void moveNext(){
-    if(level1==0&&level2==0&&level3==0) v=5;
-    if(level1==1)
-        v=5;
-    else if(level2==1)
-        v=10;
-    else if(level3==1)
-        v=15;
-    
-    glutPostRedisplay();
-}
-
 
 void startGame(){
     glColor3f(100.0/256.0, 0.0, 0.0);
