@@ -25,7 +25,7 @@ void over(void);
 void DrawMole(float x, float y);
 void moveNext(void);
 
-int a=0,b=0,w,f=0,i,j,k,v,wwh=1024;
+int p,q,w,f=0,i,j,k,v,wwh=1024;
 int hitFlag=0, messageTrue=0, startFlag=0, backFlag=0, controlsFlag=0, aboutFlag=0, dirFlag=0, upFlag=0, overFlag=0, levFlag;
 int a1 = 1200, b1 = 100;
 int a2, b2;
@@ -58,7 +58,7 @@ char over1[100]="GAME OVER!!!";
 char well[100]="WELL DONE!!!";
 char yourscore[100]="YOUR SCORE IS:";
 char hardluck[100]="WELL, HARD LUCK, TRY AGAIN...";
-char hundred[100]="100";
+char hundred[100]="75";
 char max[100]="(please maximise the window before u start the game..)";
 char key1;
 char sco[10]="SCORE:";
@@ -73,12 +73,68 @@ struct lag{
 }o;
 
 void mypos(){
-    o.x=150;
-    o.y=600;
-    //o.x2=o.x1+40;
-    //o.y2=o.y1+40;
-    DrawMole(o.x, o.y);
+    if(f==0){
+        o.x=150;
+        o.y=600;
+    }
+    if(f==1){
+        o.x = 450;
+        o.y = 200;
+    }
+    if(f==2){
+        o.x = 600;
+        o.y = 400;
+    }
+    if(f==3){
+        o.x = 750;
+        o.y = 200;
+    }
+    if(f==4){
+        o.x = 300;
+        o.y = 600;
+    }
+    if(f==5){
+        o.x = 450;
+        o.y = 400;
+    }
+    if(f==6){
+        o.x = 450;
+        o.y = 200;
+    }
+    if(f==7){
+        o.x = 750;
+        o.y = 400;
+    }
+    if(f==8){
+        o.x = 300;
+        o.y = 600;
+    }
+    if(f==9){
+        o.x = 150;
+        o.y = 600;
+    }
+    if(f==10){
+        o.x = 450;
+        o.y = 400;
+    }
+    if(f==11){
+        o.x = 750;
+        o.y = 200;
+    }
+    if(f==12){
+        o.x = 300;
+        o.y = 400;
+    }
+    if(f==13){
+        o.x = 600;
+        o.y = 600;
+    }
+    if(f==14){
+        o.x = 150;
+        o.y = 200;
+    }
     
+    DrawMole(o.x, o.y); //Draw Mole
     glFlush();
 }
 
@@ -86,21 +142,13 @@ void initfun(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0,1280,0,1024);
-    //mypos();
 }
 
-void timer_func(){    // handle animation{
-     // update the postion
-    //if (value<150000){ // as in your originial loop
-        //moveNext();
-        //glutTimerFunc(10000, timer_func, f);
-        //value++;// plan next occurence
-    //}
+void timer_func(){
     int ah = 100;
     glColor3f(1,1,1);
     glPointSize(5);
     glBegin(GL_POINTS);
-    //glVertex2f(800,ah);
     while(ah!=1000){
         glVertex2f(1200,ah);
         ah += 10;
@@ -110,8 +158,12 @@ void timer_func(){    // handle animation{
 }
 
 void initTime(){
-    a1 = 1200, b1 = 100;
-    a2 = a1+20, b2 = b1+20;
+    a1 = 1200;
+    b1 = 100;
+    a2 = a1+20;
+    b2 = b1+20;
+    glRectf(a1,b1,a2,b2);
+    glFlush();
 }
 
 void DrawCircle(float x, float y)
@@ -205,132 +257,157 @@ void startGame(){
     glRasterPos2f(170,800);
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs1+48);
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,vs2+48);
+    
     if(hitFlag==0){
         glColor3f(1.0,1.0,1.0);
         //object;
-        a2 = a1+20, b2 = b1+20;
+        a2 = a1+20;
+        b2 = b1+20;
         glRectf(a1,b1,a2,b2);
-        glFlush();
+        //glFlush();
         if(f==0){
-            mypos();
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==1){
-            initTime();
-            //glutSwapBuffers();
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
-            DrawMole(450, 200);
+                initTime();
+            }
+            mypos();
         }
-        
         if (f==2){
-            a1 = 1200, b1 = 100;
-            a2 = a1+20, b2 = b1+20;
-            glColor3f(1.0,1.0,1.0);
-            glRectf(a1,b1,a2,b2);
-            glFlush();
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==3){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==4){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==5){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==6){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==7){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==8){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==9){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==10){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==11){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==12){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==13){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+                initTime();
+            }
+            mypos();
         }
         if (f==14){
-            DrawMole(450, 200);
             if(b2<=840)
                 moveUp();
-            if(b2>840)
+            else{
                 f++;
+            }
+            mypos();
+        }
+        if(f==15){
+            over();
         }
         glFlush();
     }
-        
     glColor3f(0,0,1);
-    glPointSize(5);
+    glPointSize(15);
     glBegin(GL_POINTS);
-    glVertex2f(a,b);
+    glVertex2f(p,q);
     glEnd();
     if(hitFlag==1){
         hitFlag=0;
@@ -338,9 +415,16 @@ void startGame(){
         char b[20]={"hit..."},c[20]={"lost.."};
         //glRasterPos2f(o.x1,o.y1);
         if(messageTrue==1){
-            score+=10;
+            score+=5;
             for(int i=0;i<7;i++)
                 glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,b[i]);
+            f++;
+            if(f<15){
+                initTime();
+            }
+            else{
+                over();
+            }
             glFlush();
         }
         for(int t=0;t<1000;t++)
@@ -413,7 +497,7 @@ void over(){
     glRasterPos2f(500,700);
     for(w=0;w<sizeof(over1);w++)
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,over1[w]);
-    if(score==100){
+    if(score==75){
         glRasterPos2f(400,600);
         for(i=0;i<sizeof(well);i++)
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,well[i]);
@@ -621,10 +705,10 @@ void keyboard(unsigned char key,int mx,int my){
 }
 
 void mouse(int b,int s,int mx,int my){
-    a=mx-10;
-    b=1024-my-100;
+    p=mx-10;
+    q=wwh-my+100;
     //if(x>=o.x1 && x<o.x1+40 && y>=o.y1 && y<=o.y1+40 ){
-    if(a==o.x && b==o.y){
+    if(p>=o.x-50 && p<=o.x+50 && q>=o.y-50 && q<=o.y+50){
         hitFlag=1;
         messageTrue=1;
     }
